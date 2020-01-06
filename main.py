@@ -55,18 +55,15 @@ def mouse_handler(event, x, y, flags, data):
                 #print(idx)
             #else:
                 #print(idx)
+        ##Edit the coordinates in the selected position with another position
         if(curidx != idx):
             list_poly[idx] = (x,y)
             print("List of points after being edited: ",list_poly)
-            idx = -1
-        
-                
+            idx = -1    
         cv2.circle(data['im'], (x, y), 2, (0, 0, 255),5)
-        cv2.line(data['im'], data['lines'][0][0], data['lines'][0][1], (0,0,255), 2)
-        
         cv2.imshow("Image", data['im'])
 
-    
+    ##If the mouse is at the coordinates available in the coordinates list, draw a circle with a different color
     elif event == cv2.EVENT_MOUSEMOVE:
         if btn_down == False:
             for sub_point in list_poly:
@@ -141,7 +138,6 @@ imgname = input("enter image file name: ")
 filename = os.path.splitext(imgname)[0]
 image = os.path.join(img_path,imgname)
 #print(image)
-#img = cv2.imread(base, 1)
 if os.path.isfile(image):
     img = cv2.imread(image, 1)
 else:
@@ -161,11 +157,11 @@ if os.path.isfile(pre_path):
 else:
     ctypes.windll.user32.MessageBoxW(0, "File json not exist", "Warning!",0x30)
     exit()
-#Danh sach toa do trong file json
+##Get list of coordinates in json file
 lst_polys = pred['polys']
 print("List of points in json file: \n",lst_polys)
 print(type(lst_polys))
-#Xet toa do trong file json:
+##If the coordinates in the list are less than 1 then multiply by the height and width of the image
 fst_x = np.float32(lst_polys[0][0])
 fst_y = np.float32(lst_polys[0][1])
 if fst_x<1 or fst_x<1:
@@ -178,7 +174,7 @@ else:
 
 #print(a)
 #print("dtype of a: ",type(a[0]))
-#Toa danh sach toa do co kieu du lieu float32
+##The list of coordinates has a float32 data type
 list_poly = list(zip(a, b))
 print("The list of points has a float32 data type:\n ",list_poly) 
 print("",type(list_poly))
