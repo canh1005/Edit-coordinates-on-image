@@ -11,19 +11,19 @@ curidx = -1
 FINAL_LINE_COLOR = (0, 0, 0)
 
 def get_points(im):
-    # Set up data to send to mouse handler
+    ## Set up data to send to mouse handler
     data = {}
     data['im'] = im.copy()
     data['lines'] = []
     #print(data['lines'])
-    # Set the callback function for any mouse event
+    ## Set the callback function for any mouse event
     #while True:
     cv2.imshow("Image", im)
     cv2.setMouseCallback("Image", mouse_handler, data)
     
     cv2.waitKey(0)
     
-    # Convert array to np.array in shape n,2,2
+    ## Convert array to np.array in shape n,2,2
     #points = np.uint16(data['lines'])
     points = np.float32(data['lines'])
     return points, data['im']
@@ -48,6 +48,7 @@ def mouse_handler(event, x, y, flags, data):
         #lst_pts.append((x, y))
         data['lines'][0].append((x, y)) #append the seconf point
         #print(data['lines'])
+        ##Get the index of coordinates in the list
         for sub_point in list_poly:
             cv2.circle(data['im'], sub_point, 2, (255, 0, 255), 5, 16)
             if((x,y) == sub_point):
@@ -55,7 +56,7 @@ def mouse_handler(event, x, y, flags, data):
                 #print(idx)
             #else:
                 #print(idx)
-        ##Edit the coordinates in the selected position with another position
+        ##Edit the coordinates in the selected position with another position if index has been change
         if(curidx != idx):
             list_poly[idx] = (x,y)
             print("List of points after being edited: ",list_poly)
@@ -82,6 +83,7 @@ def mouse_handler(event, x, y, flags, data):
         data['im'] = img_t.copy()
         data['lines'].insert(0,[(x, y)]) #prepend the point
         cv2.circle(data['im'], (x, y), 1, (0, 0, 255), 5)
+        ##Get the index of coordinates in the list
         for sub_point in list_poly:
             cv2.circle(data['im'], tuple(sub_point), 2, (255, 0, 255), 5, 16)
             if((x,y) == sub_point):
