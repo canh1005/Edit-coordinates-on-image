@@ -116,7 +116,7 @@ def on_key_press():
     while True:  # making a loop
                
         try:  # used try so that if user pressed other than the given key error will not be shown
-            if keyboard.is_pressed('s'):  # if key 's' is pressed
+            if keyboard.is_pressed('s'):  # if key 's' is pressed, list of new coordinates will be save to file json
                 messageBox = ctypes.windll.user32.MessageBoxW
                 returnValue = messageBox(None,"Do you want to save?","Question?",32 | 0x1) 
                 if returnValue == 1:
@@ -143,7 +143,7 @@ image = os.path.join(img_path,imgname)
 if os.path.isfile(image):
     img = cv2.imread(image, 1)
 else:
-    ctypes.windll.user32.MessageBoxW(0, "Image not exist", "Warning!",0x30)
+    ctypes.windll.user32.MessageBoxW(0, "Image not exist, Please put image with extension png to Imgs folder", "Warning!",0x30)
     exit()
 img_t = img
 w,h = img.shape[:2]
@@ -157,7 +157,7 @@ if os.path.isfile(pre_path):
     with open(pre_path,'r') as file:
         pred = json.load(file)
 else:
-    ctypes.windll.user32.MessageBoxW(0, "File json not exist", "Warning!",0x30)
+    ctypes.windll.user32.MessageBoxW(0, "File json not exist, Please put file json has same name with image to Output folder", "Warning!",0x30)
     exit()
 ##Get list of coordinates in json file
 lst_polys = pred['polys']
